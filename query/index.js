@@ -8,7 +8,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
-const { userCreateConsume,postCreateConsume,topicCreateConsume,commentCreateConsume } = require('./kafkaConsumer/kafka')
+const { userCreateConsume,
+        postCreateConsume,
+        topicCreateConsume,
+        commentCreateConsume,
+        commentUpdateConsume,
+        commentDeleteConsume
+    } = require('./kafkaConsumer/kafka')
 const Post = require('./models/Post.Model')
 
 
@@ -53,4 +59,6 @@ app.listen(PORT, function(){
     postCreateConsume();
     topicCreateConsume();
     commentCreateConsume();
+    commentUpdateConsume();
+    commentDeleteConsume();
 });

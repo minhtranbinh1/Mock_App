@@ -16,6 +16,15 @@ Content-Type: application/json
 
 {
     "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b48fa0257f3e202500c654",
-    "content":"So bad Topic :("
+    "topic":"61b49052257f3e202500c656",
+    "content":"Hello Post 2"
 }
+################################
+PUT http://localhost:3005/api/comment/61b57ce40c848cb0a5398986
+Content-Type: application/json
+
+{
+    "content": "sorry, it's so very good"
+}
+################################
+DELETE http://localhost:3005/api/comment/61b5ee679ee7ffb5cff41bca

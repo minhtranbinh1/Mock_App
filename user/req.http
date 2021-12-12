@@ -2,8 +2,8 @@ POST http://localhost:3001/api/user
 Content-Type: application/json
 
 {
-    "username": "tranbinhminh",
-    "email": "tbm1@gmail.com",
+    "username": "sanhtuan",
+    "email": "sanhtuan@gmail.com",
     "password": "1234",
     "confirmPassword": "1234"
 }
