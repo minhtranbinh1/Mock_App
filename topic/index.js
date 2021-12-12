@@ -9,7 +9,12 @@ const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
 
-const { topicCreatedProduce } = require('./kafkaProducer/index')
+const { 
+    topicCreatedProduce,
+    topicUpdateProduce,
+    topicRemoveProduce,
+    topicRemoveProduceToCmtService
+ } = require('./kafkaProducer/index')
 const Topic = require('./models/Topic.Model')
 
 
@@ -25,6 +30,36 @@ app.post('/api/topics',async function(req, res){
         res.status(500).json({success:false, message:"internal server error", error:error})
     }
 
+})
+//// update topic
+app.put('/api/topic/:id',async (req,res) => {
+    const id = req.params.id;
+    const { title } = req.body; 
+    try {
+        await Topic.findByIdAndUpdate(id,{title})
+        const item = await Topic.findById(id)
+        topicUpdateProduce(item)
+        res.status(200).json({success:true, message:"update one topic successfully",item});
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success:false, message:"internal server error", error:error})
+    }
+    console.log(req.body);
+})
+
+// delete topic 
+app.delete('/api/topic/:id',async(req,res)=>{
+    const id = req.params.id;
+    try {
+        const deleteItem = await Topic.findByIdAndDelete(id);
+        topicRemoveProduce({_id:id});
+        topicRemoveProduceToCmtService({_id:id});
+        res.status(200).json({success: true,message:"delete success",deleteItem})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false,message: error})
+    }
 })
 
 

@@ -14,7 +14,7 @@ const { cmtCreatedProduce,
         cmtUpdateProduce,
         cmtRemoveProduce
 }= require('./kafkaProducer/index');
-
+const { topicDeleteConsume } = require('./kafkaConsumer/index')
 
 // Create a new comment
 app.post('/api/comment',async (req, res) => {
@@ -60,5 +60,6 @@ app.delete('/api/comment/:id',async(req,res) => {
 
 app.listen(PORT, function(){
     db.connect();
+    topicDeleteConsume(); 
     console.log('service listening on port ' + PORT);
 });

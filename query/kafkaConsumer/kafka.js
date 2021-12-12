@@ -110,6 +110,8 @@ const commentCreateConsume = async()=>{
 		},
 	})
 }
+
+
 // Update Event
 const commentUpdateConsume = async()=>{
     const clientId = "cmtUpdate";
@@ -134,6 +136,30 @@ const commentUpdateConsume = async()=>{
 		},
 	})
 }
+const topicUpdateConsume = async()=>{
+    const clientId = "topicUpdate";
+    const kafka = new Kafka({ clientId, brokers })
+    const consumer = kafka.consumer({ groupId: clientId})
+    const topic = "update-topic";
+    // Logic
+
+	await consumer.connect()
+	await consumer.subscribe({ topic })
+	await consumer.run({
+		eachMessage: async ({ message }) => {
+            try {
+                const topicUpdate = JSON.parse(message.value)
+                const { _id,title,updatedAt} = topicUpdate;
+                await Topic.findByIdAndUpdate(_id,{title,updatedAt});
+            } catch (error) {
+                console.log(error)
+            }
+
+		},
+	})
+}
+
+
 // Delete Event
 const commentDeleteConsume = async()=>{
     const clientId = "cmtRemove";
@@ -162,6 +188,34 @@ const commentDeleteConsume = async()=>{
 	})
 }
 
+const topicDeleteConsume = async()=>{
+    const clientId = "topicRemove";
+    const kafka = new Kafka({ clientId, brokers })
+    const consumer = kafka.consumer({ groupId: clientId})
+    const topic = "remove-topic";
+    // Logic
+
+	await consumer.connect()
+	await consumer.subscribe({ topic,fromBeginning: true })
+	await consumer.run({
+		eachMessage: async ({ message }) => {
+            try {
+                const id = JSON.parse(message.value)
+                const { _id } = id;
+                await Topic.findByIdAndRemove(_id);
+                await Post.findOneAndUpdate({listTopic:{$in : id}},{$pull:{
+                    listTopic: _id
+                }})
+                await Comment.deleteMany({topic:_id});
+
+            } catch (error) {
+                console.log(error)
+            }
+
+		},
+	})
+}
+
 
 module.exports = { 
     userCreateConsume,
@@ -169,5 +223,7 @@ module.exports = {
     topicCreateConsume,
     commentCreateConsume,
     commentUpdateConsume,
-    commentDeleteConsume
+    commentDeleteConsume,
+    topicUpdateConsume,
+    topicDeleteConsume
 }
