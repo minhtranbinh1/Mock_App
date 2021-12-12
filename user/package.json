@@ -1,0 +1,27 @@
+{
+  "name": "Assignment4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "user": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tran Binh Minh",
+  "license": "ISC",
+  "dependencies": {
+    "avsc": "^5.7.3",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "kafkajs": "^1.15.0",
+    "mongoose": "^6.0.14",
+    "nodemailer": "^6.7.2",
+    "otp-generator": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

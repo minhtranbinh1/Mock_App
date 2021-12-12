@@ -1,0 +1,21 @@
+get http://localhost:3003/api/posts?postId=61b41ec74daacc240e218001
+
+################################
+POST http://localhost:3004/api/topics
+Content-Type: application/json
+
+{
+    "title":"here paragraph nice",
+    "postId": "61b41ec74daacc240e218001",
+    "textHighlight":"post",
+    "user": "61b41defd2dcd99d22f0b6cc"
+}
+########
+POST http://localhost:3005/api/comment
+Content-Type: application/json
+
+{
+    "user":"61b41defd2dcd99d22f0b6cc",
+    "topic":"61b48fa0257f3e202500c654",
+    "content":"So bad Topic :("
+}

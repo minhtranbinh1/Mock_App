@@ -1,0 +1,8 @@
+POST http://localhost:3002/api/post/
+Content-Type: application/json
+
+{
+    "title":"Post 1",
+    "content": "content post 1",
+    "user": "61b41defd2dcd99d22f0b6cc"
+}
