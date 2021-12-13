@@ -9,6 +9,7 @@ const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
 
+
 const { postCreatedProduce } = require('./kafkaProducer/index')
 const Post = require('./models/Post.Model')
 

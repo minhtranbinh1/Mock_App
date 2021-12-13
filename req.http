@@ -5,7 +5,7 @@ POST http://localhost:3004/api/topics
 Content-Type: application/json
 
 {
-    "title":"Topic 1",
+    "title":"Topic 2",
     "postId": "61b41ec74daacc240e218001",
     "textHighlight":"post 1",
     "user": "61b41defd2dcd99d22f0b6cc"
@@ -16,8 +16,8 @@ Content-Type: application/json
 
 {
     "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b606a54486a729e24b15e9",
-    "content":"Hello Post 1"
+    "topic":"61b6b916f5995ad21adc7bd6",
+    "content":"Hey"
 }
 ################################
 PUT http://localhost:3005/api/comment/61b57ce40c848cb0a5398986
@@ -36,4 +36,8 @@ Content-Type: application/json
     "title":"Edit second"
 }
 ########
-delete http://localhost:3004/api/topic/61b606a54486a729e24b15e9
+delete http://localhost:3004/api/topic/61b6b916f5995ad21adc7bd6
+
+
+################################################################
+delete http://localhost:3005/api/comment/topic/61b6aff5cc82c825ae151a6a

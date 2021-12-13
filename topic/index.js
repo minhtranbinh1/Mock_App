@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
+const axios = require('axios');
 
 const { 
     topicCreatedProduce,
@@ -52,10 +53,15 @@ app.put('/api/topic/:id',async (req,res) => {
 app.delete('/api/topic/:id',async(req,res)=>{
     const id = req.params.id;
     try {
-        const deleteItem = await Topic.findByIdAndDelete(id);
-        topicRemoveProduce({_id:id});
-        topicRemoveProduceToCmtService({_id:id});
-        res.status(200).json({success: true,message:"delete success",deleteItem})
+        const response = await axios.delete(`http://localhost:3005/api/comment/topic/${id}`)
+        if(response.data.success){
+            const deleteItem = await Topic.findByIdAndDelete(id);
+            topicRemoveProduce({_id:id});
+            return res.status(200).json({success: true,message:"delete success",deleteItem})
+        }else{
+            return res.status(400).json({success: false,message:"delete failed"})
+        }
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({success: false,message: error})

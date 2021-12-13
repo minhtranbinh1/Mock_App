@@ -14,7 +14,6 @@ const { cmtCreatedProduce,
         cmtUpdateProduce,
         cmtRemoveProduce
 }= require('./kafkaProducer/index');
-const { topicDeleteConsume } = require('./kafkaConsumer/index')
 
 // Create a new comment
 app.post('/api/comment',async (req, res) => {
@@ -56,10 +55,20 @@ app.delete('/api/comment/:id',async(req,res) => {
         res.status(500).json({success: false,message: error})
     }
 })
+// delete by id topic
+app.delete('/api/comment/topic/:id',async(req,res) => {
+    const id = req.params.id;
+    try {
+        await Comment.deleteMany({topic:id});
+        res.status(200).json({success: true,message:"delete success"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false,message: error})
+    }
+})
 
 
 app.listen(PORT, function(){
     db.connect();
-    topicDeleteConsume(); 
     console.log('service listening on port ' + PORT);
 });
