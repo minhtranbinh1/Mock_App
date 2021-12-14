@@ -7,7 +7,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0M
 
 {
     "title":"Topic of post 1",
-    "postId": "61b8bce1ed3ea70ff0d39d1d",
+    "postId": "61b8bce1ed3ea70ff0d39d2c",
     "textHighlight":"post 1",
     "user": "61b41defd2dcd99d22f0b6cc"
 }
@@ -18,8 +18,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0M
 
 {
     "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b8bec7e73fea41c222ccd0",
-    "postId":"61b8bce1ed3ea70ff0d39d1d",
+    "topic":"61b8d44c2f324eda72dec23c",
+    "postId":"61b8bce1ed3ea70ff0d39d2c",
     "content":"Hello topic 1"
 }
 ################################
@@ -65,7 +65,7 @@ Content-Type: application/json
     "content":"Content Post 3 Updated"
 }
 ########
-DELETE http://localhost:3002/api/post/61b8bce1ed3ea70ff0d39d1f
+DELETE http://localhost:3002/api/post/61b8bce1ed3ea70ff0d39d2c
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTc4ODd9.dVv-IWFwe62cDiUnGbcOEGBiAy_9L9YMtLI7ap1eEdA
 ########
 POST http://localhost:3001/api/user
