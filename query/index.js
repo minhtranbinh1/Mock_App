@@ -54,6 +54,36 @@ app.get('/api/posts',async (req, res, next) => {
         return res.status(500).json({error: error})
     }
 })
+app.get('/api/getAllPosts',async function (req, res) {
+    try {
+        const post = await Post.find().populate([{
+            path: 'user',
+            select:
+                ['email', 'username','avatar','role']
+        },{
+            path: 'listTopic',
+            populate:[{
+                path: 'user',
+                select: 
+                    ['email', 'username','avatar','role']
+            },{
+                path: 'listComments',
+                populate:{
+                    path: 'user',
+                    select: 
+                    ['email', 'username','avatar','role']
+                },
+                select: 
+                    ['user', 'content']
+            }],
+            select:
+                ['title', 'postId','textHighlight','user']
+        }])
+        return res.status(200).json({success: true,message: 'Get ALL post successfully', post})
+    } catch (error) {
+        return res.status(500).json({error: error})
+    }
+})
 
 
 app.listen(PORT, function(){

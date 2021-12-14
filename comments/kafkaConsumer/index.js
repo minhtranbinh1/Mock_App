@@ -27,7 +27,32 @@ const topicDeleteConsume = async()=>{
 	})
 }
 
+const postDeleteConsume = async()=>{
+    const clientId = "postRemove2";
+    const kafka = new Kafka({ clientId, brokers })
+    const consumer = kafka.consumer({ groupId: clientId})
+    const topic = "remove-post";
+    // Logic
+
+	await consumer.connect()
+	await consumer.subscribe({ topic })
+	await consumer.run({
+		eachMessage: async ({ message }) => {
+            try {
+                const id = JSON.parse(message.value)
+                await Comment.deleteMany({postId:id});
+
+            } catch (error) {
+                console.log(error)
+            }
+
+		},
+	})
+}
+
+
 
 module.exports = { 
-    topicDeleteConsume
+    topicDeleteConsume,
+    postDeleteConsume
 }

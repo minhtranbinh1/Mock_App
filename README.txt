@@ -18,3 +18,5 @@ TOPIC SERVICE: PORT 3004;
 QUERY (main DB): PORT 3003;
 
 - Get one Post: http://localhost:3003/api/posts
+
+CRAWLDATA SERVICE: PORT 3006

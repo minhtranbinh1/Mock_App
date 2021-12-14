@@ -1,23 +1,25 @@
-get http://localhost:3003/api/posts?postId=61b41ec74daacc240e218001
+get http://localhost:3003/api/getAllPosts
 
 ################################
 POST http://localhost:3004/api/topics
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTczOTN9.T3rUhKX9pmybTpeqg1YynkkUhSZTES1G_48OXYKKycI
 
 {
     "title":"Topic of post 1",
-    "postId": "61b802f88c5250d7519ea93c",
+    "postId": "61b8bce1ed3ea70ff0d39d1d",
     "textHighlight":"post 1",
     "user": "61b41defd2dcd99d22f0b6cc"
 }
 ########
 POST http://localhost:3005/api/comment
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTczOTN9.T3rUhKX9pmybTpeqg1YynkkUhSZTES1G_48OXYKKycI
 
 {
     "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b80305b691c9b35d45f142",
-    "postId":"61b802f88c5250d7519ea93c",
+    "topic":"61b8bec7e73fea41c222ccd0",
+    "postId":"61b8bce1ed3ea70ff0d39d1d",
     "content":"Hello topic 1"
 }
 ################################
@@ -28,7 +30,7 @@ Content-Type: application/json
     "content": "sorry, it's so very good"
 }
 ################################
-DELETE http://localhost:3005/api/comment/61b5ee679ee7ffb5cff41bca
+DELETE http://localhost:3005/api/comment/61b8bf8aad1f6ed43365d210
 ########
 PUT http://localhost:3004/api/topic/61b49052257f3e202500c656
 Content-Type: application/json
@@ -63,13 +65,14 @@ Content-Type: application/json
     "content":"Content Post 3 Updated"
 }
 ########
-DELETE http://localhost:3002/api/post/61b802f88c5250d7519ea93c
+DELETE http://localhost:3002/api/post/61b8bce1ed3ea70ff0d39d1f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTc4ODd9.dVv-IWFwe62cDiUnGbcOEGBiAy_9L9YMtLI7ap1eEdA
 ########
 POST http://localhost:3001/api/user
 Content-Type: application/json
 
 {
-    "username": "sanhtuan",
+    "username": "tb1",
     "email": "sanhtuan@gmail.com",
     "password": "1234",
     "confirmPassword": "1234"
@@ -81,7 +84,7 @@ POST http://localhost:3001/api/user/login
 Content-Type: application/json
 
 {
-    "email": "sanhtuan@gmail.com",
+    "email": "tbm1@gmail.com",
     "password": "1234"
 }
 ########
@@ -99,3 +102,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI1Z
     "content": "content post 4",
     "user": "61b5d1d590551dc386ea57ae"
 }
+
+########
+get http://localhost:3006/api/crawl
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTQ2Nzh9.kedjyOVGRFd_plMfA4iJTXJyH1yFdVHkJ8NSJZ4Rzcg

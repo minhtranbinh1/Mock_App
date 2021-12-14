@@ -22,11 +22,26 @@ const { auth,authorization } = require('./middlewares/Auth')
 // add post
 app.post('/api/post',auth,authorization,async (req, res) => {
     const { title,content,user } = req.body;
+    console.log(req.body)
     const newPost = new Post({title,content,user})
     try {
         postCreatedProduce(newPost);
         await newPost.save();
         res.status(200).json({success: true, message:"created Post successfully",data: newPost})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error: error});
+    }
+})
+/// add post by crawl
+app.post('/api/crawl/post',async (req, res) => {
+    console.log(req.body)
+    const newPost = req.body
+    const { _id,title,content,user,createdAt,updatedAt } = newPost;
+    try {
+        postCreatedProduce(newPost);
+        const post = new Post({_id,title,content,user,createdAt,updatedAt})
+        await post.save();
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error});
@@ -54,10 +69,6 @@ app.delete('/api/post/:id',auth,authorization,async function(req, res){
     try {
         const deleteItem = await Post.findByIdAndRemove(postId);
         if(!deleteItem) return res.status(404).json({success: false,message:"Delete failed"});
-        const deleteCmtOfPost = await axios.delete(`http://localhost:3005/api/comment/post/${postId}`)
-        if(!deleteCmtOfPost.data.success) return res.status(404).json({success: false,message:"cannot delete comment of this post"});
-        const deleteTopicOfPost = await axios.delete(`http://localhost:3004/api/topic/post/${postId}`)
-        if(!deleteTopicOfPost.data.success) return res.status(404).json({success: false,message:"cannot delete Topics of this post"});
         postRemoveProduce({postId})
         return res.status(200).json({success: true,message:"post delete successfully",deleteItem});
         

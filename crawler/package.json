@@ -1,10 +1,10 @@
 {
-  "name": "comments",
+  "name": "crawler",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "comment": "nodemon index.js",
+    "crawl": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,10 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "kafkajs": "^1.15.0",
-    "mongoose": "^6.1.1"
-  },
-  "devDependencies": {
+    "mongoose": "^6.1.1",
     "nodemon": "^2.0.15"
   }
 }

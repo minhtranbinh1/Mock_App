@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(cors());
 const axios = require('axios');
 const { auth,authorization } = require('./middlewares/Auth')
+const { postDeleteConsume } = require('./kafkaConsume/index')
 
 const { 
     topicCreatedProduce,
@@ -84,4 +85,5 @@ app.delete('/api/topic/post/:id',auth,authorization,async(req,res)=>{
 app.listen(PORT, function(){
     db.connect();
     console.log('service listening on port ' + PORT);
+    postDeleteConsume();
 });

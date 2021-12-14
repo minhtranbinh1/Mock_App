@@ -2,13 +2,11 @@ const axios = require('axios');
 async function auth(req, res, next) {
     const authHeader = req.header('Authorization')
     const token = authHeader && authHeader.split(' ')[1]
-    console.log(token);
     if(!token) return res.status(401).json({success: false,message: 'Access token not found'})
     try {
         const respone = await axios.post('http://localhost:3001/api/auth', {accessToken: token})
         if(!respone.data.success) return res.status(respone.data.statusCode).json({success: false,message: "Acess token is not available"})
         req.user = respone.data.user
-        console.log(respone.data.user)
         return next();
     } catch (error) {
         console.log(error)

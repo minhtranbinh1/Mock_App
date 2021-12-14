@@ -238,7 +238,7 @@ const topicDeleteConsume = async()=>{
 	})
 }
 const postDeleteConsume = async()=>{
-    const clientId = "postRemove";
+    const clientId = "postRemove1";
     const kafka = new Kafka({ clientId, brokers })
     const consumer = kafka.consumer({ groupId: clientId})
     const topic = "remove-post";

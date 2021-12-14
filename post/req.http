@@ -1,9 +1,0 @@
-POST http://localhost:3002/api/post/
-Content-Type: application/json
-Authorization: Bearer 
-
-{
-    "title":"Post 4",
-    "content": "content post 4",
-    "user": "61b5d1d590551dc386ea57ae"
-}
