@@ -152,5 +152,25 @@ class UserController{
             res.status(500).json({success:false,message:"Internal Server Error"})
         }
     }
-}
+
+    async auth(req,res) {
+        const { accessToken } = req.body;
+        console.log(req.body)
+        try {
+                const decoded = jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET)
+                console.log(decoded)
+                if(decoded){
+                    const id = decoded.userId
+                    const user = await User.findById(id);
+                    console.log(user)
+                    return res.status(200).json({success: true,message: 'Access token is valid',user:user});
+
+                }
+                return res.json({statusCode:400,success: false,message: 'Access token is no valid'})
+        
+            } catch (error) {
+                return res.json({statusCode:400,success: false,message: 'Invalid token'})
+            }
+        } 
+    }
 module.exports = new  UserController;

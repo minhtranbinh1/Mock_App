@@ -16,10 +16,11 @@ const { postCreatedProduce,
         postRemoveProduce
 } = require('./kafkaProducer/index')
 const Post = require('./models/Post.Model')
+const { auth,authorization } = require('./middlewares/Auth')
 
 // routes
 // add post
-app.post('/api/post',async (req, res) => {
+app.post('/api/post',auth,authorization,async (req, res) => {
     const { title,content,user } = req.body;
     const newPost = new Post({title,content,user})
     try {
@@ -32,7 +33,7 @@ app.post('/api/post',async (req, res) => {
     }
 })
 // update the post
-app.put('/api/post/:id',async(req, res)=>{
+app.put('/api/post/:id',auth,authorization,async(req, res)=>{
     const postId = req.params.id;
     const { title,content } = req.body;
     try {
@@ -48,7 +49,7 @@ app.put('/api/post/:id',async(req, res)=>{
     }
 })
 // delete post by id
-app.delete('/api/post/:id',async function(req, res){
+app.delete('/api/post/:id',auth,authorization,async function(req, res){
     const postId = req.params.id;
     try {
         const deleteItem = await Post.findByIdAndRemove(postId);

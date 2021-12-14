@@ -15,8 +15,10 @@ const { cmtCreatedProduce,
         cmtRemoveProduce
 }= require('./kafkaProducer/index');
 
+const { auth,authorization } = require('./middlewares/Auth')
+
 // Create a new comment
-app.post('/api/comment',async (req, res) => {
+app.post('/api/comment',auth,authorization,async (req, res) => {
     const {user,topic,content,postId} = req.body;
     try {
         const newCmt = new Comment({user,topic,content,postId});
@@ -31,7 +33,7 @@ app.post('/api/comment',async (req, res) => {
 })
 
 // Edit comment for topic
-app.put('/api/comment/:id',async(req, res)=>{
+app.put('/api/comment/:id',auth,authorization,async(req, res)=>{
     const id = req.params.id;
     const { content } = req.body;
     try {
@@ -56,7 +58,7 @@ app.delete('/api/comment/:id',async(req,res) => {
     }
 })
 // delete by id topic 
-app.delete('/api/comment/topic/:id',async(req,res) => {
+app.delete('/api/comment/topic/:id',auth,authorization,async(req,res) => {
     const id = req.params.id;
     try {
         await Comment.deleteMany({topic:id});
@@ -67,7 +69,7 @@ app.delete('/api/comment/topic/:id',async(req,res) => {
     }
 })
 // delete by id post
-app.delete('/api/comment/post/:id',async(req,res) => {
+app.delete('/api/comment/post/:id',auth,authorization,async(req,res) => {
     const id = req.params.id;
     try {
         await Comment.deleteMany({postId:id});

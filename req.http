@@ -64,3 +64,38 @@ Content-Type: application/json
 }
 ########
 DELETE http://localhost:3002/api/post/61b802f88c5250d7519ea93c
+########
+POST http://localhost:3001/api/user
+Content-Type: application/json
+
+{
+    "username": "sanhtuan",
+    "email": "sanhtuan@gmail.com",
+    "password": "1234",
+    "confirmPassword": "1234"
+}
+
+
+################################
+POST http://localhost:3001/api/user/login
+Content-Type: application/json
+
+{
+    "email": "sanhtuan@gmail.com",
+    "password": "1234"
+}
+########
+GET  http://localhost:3000/api/user/info
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWE4YWEwNTk1NjA3MjgxN2Y4YTMyMWEiLCJpYXQiOjE2Mzg3NzAyNTF9.oOT-0RLrumfRiIDEI5Udh8U4CtNi1Hs35elhwYgs0nQ
+
+################################
+POST http://localhost:3002/api/post/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI1ZDFkNTkwNTUxZGMzODZlYTU3YWUiLCJpYXQiOjE2Mzk0NzgwNTF9.ffOhFkuHz8ZVuwTDoi1FWt5AOCAN8Oxeq3vW8i5FgSY
+
+{
+    "title":"Post 4",
+    "content": "content post 4",
+    "user": "61b5d1d590551dc386ea57ae"
+}

@@ -1,4 +1,4 @@
-ALL API of User Service; PORT 3001; 
+ALL API of Auth Service; PORT 3001; 
 
 - Sign Up: http://localhost:3001/api/user, METHOD: POST , KEY: email,password,confirmPassword
 - Login : http://localhost:3001/api/user/login, METHOD: POST , KEY: email,password
