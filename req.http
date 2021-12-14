@@ -5,8 +5,8 @@ POST http://localhost:3004/api/topics
 Content-Type: application/json
 
 {
-    "title":"Topic 2",
-    "postId": "61b41ec74daacc240e218001",
+    "title":"Topic of post 1",
+    "postId": "61b802f88c5250d7519ea93c",
     "textHighlight":"post 1",
     "user": "61b41defd2dcd99d22f0b6cc"
 }
@@ -16,8 +16,9 @@ Content-Type: application/json
 
 {
     "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b6b916f5995ad21adc7bd6",
-    "content":"Hey"
+    "topic":"61b80305b691c9b35d45f142",
+    "postId":"61b802f88c5250d7519ea93c",
+    "content":"Hello topic 1"
 }
 ################################
 PUT http://localhost:3005/api/comment/61b57ce40c848cb0a5398986
@@ -41,3 +42,25 @@ delete http://localhost:3004/api/topic/61b6b916f5995ad21adc7bd6
 
 ################################################################
 delete http://localhost:3005/api/comment/topic/61b6aff5cc82c825ae151a6a
+################################################################
+POST http://localhost:3002/api/post/
+Content-Type: application/json
+
+{
+    "title":"Post 1",
+    "content": "content post 1",
+    "user": "61b5d1d590551dc386ea57ae"
+}
+
+
+
+################################
+PUT http://localhost:3002/api/post/61b7f888a881ad327b8f0ee2
+Content-Type: application/json
+
+{
+    "title": "Post 3 Updated",
+    "content":"Content Post 3 Updated"
+}
+########
+DELETE http://localhost:3002/api/post/61b802f88c5250d7519ea93c
