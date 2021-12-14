@@ -35,7 +35,6 @@ app.post('/api/post',auth,authorization,async (req, res) => {
 })
 /// add post by crawl
 app.post('/api/crawl/post',async (req, res) => {
-    console.log(req.body)
     const newPost = req.body
     const { _id,title,content,user,createdAt,updatedAt } = newPost;
     try {
@@ -69,7 +68,7 @@ app.delete('/api/post/:id',auth,authorization,async function(req, res){
     try {
         const deleteItem = await Post.findByIdAndRemove(postId);
         if(!deleteItem) return res.status(404).json({success: false,message:"Delete failed"});
-        postRemoveProduce({postId})
+        postRemoveProduce({postId:deleteItem._id})
         return res.status(200).json({success: true,message:"post delete successfully",deleteItem});
         
     } catch (error) {

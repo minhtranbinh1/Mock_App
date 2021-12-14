@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
-const { postDeleteConsume } = require('./kafkaConsumer/index')
+const { postDeleteConsume,topicDeleteConsume } = require('./kafkaConsumer/index')
 
 const Comment = require('./models/Comment.Model')
 const { cmtCreatedProduce,
@@ -85,5 +85,6 @@ app.delete('/api/comment/post/:id',auth,authorization,async(req,res) => {
 app.listen(PORT, function(){
     db.connect();
     postDeleteConsume();
+    topicDeleteConsume();
     console.log('service listening on port ' + PORT);
 });

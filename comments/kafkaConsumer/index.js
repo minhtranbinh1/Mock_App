@@ -1,13 +1,14 @@
 const { Kafka } = require("kafkajs")
+const { ObjectId } = require('mongodb');
 
 const brokers = ["localhost:9092"]
 const Comment = require('../models/Comment.Model')
 
 const topicDeleteConsume = async()=>{
-    const clientId = "topicRemovesv";
+    const clientId = "topicRemove2";
     const kafka = new Kafka({ clientId, brokers })
     const consumer = kafka.consumer({ groupId: clientId})
-    const topic = "remove-topicsv";
+    const topic = "remove-topic";
     // Logic
 
 	await consumer.connect()
@@ -17,7 +18,8 @@ const topicDeleteConsume = async()=>{
             try {
                 const id = JSON.parse(message.value)
                 const { _id } = id;
-                await Comment.deleteMany({topic:_id});
+                console.log(_id)
+               await Comment.deleteMany({topic:topicId});
 
             } catch (error) {
                 console.log(error)
@@ -40,7 +42,8 @@ const postDeleteConsume = async()=>{
 		eachMessage: async ({ message }) => {
             try {
                 const id = JSON.parse(message.value)
-                await Comment.deleteMany({postId:id});
+                const { postId } = id;
+                await Comment.deleteMany({postId:postId});
 
             } catch (error) {
                 console.log(error)

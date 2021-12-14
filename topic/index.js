@@ -53,16 +53,11 @@ app.put('/api/topic/:id',auth,authorization,async (req,res) => {
 app.delete('/api/topic/:id',auth,authorization,async(req,res)=>{
     const id = req.params.id;
     try {
-        const response = await axios.delete(`http://localhost:3005/api/comment/topic/${id}`)
-        if(response.data.success){
             const deleteItem = await Topic.findByIdAndDelete(id);
+            if(!deleteItems) return res.status(404).json({success: false,message:"Delete failed"})
             topicRemoveProduce({_id:id});
             return res.status(200).json({success: true,message:"delete success",deleteItem})
-        }else{
-            return res.status(400).json({success: false,message:"delete failed"})
-        }
-        
-    } catch (error) {
+        } catch (error) {
         console.log(error);
         res.status(500).json({success: false,message: error})
     }

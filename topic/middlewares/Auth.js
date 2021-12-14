@@ -14,7 +14,6 @@ async function auth(req, res, next) {
     }
 }
 function authorization(req, res, next){
-    console.log(req.user)
     if(req.user.role === 'admin' || req.user.role === 'user'){
         return next();
     }

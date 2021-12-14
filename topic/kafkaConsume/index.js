@@ -1,4 +1,5 @@
 const { Kafka } = require("kafkajs")
+const { ObjectId } = require('mongodb');
 
 const brokers = ["localhost:9092"]
 const Topic = require('../models/Topic.Model')
@@ -17,7 +18,8 @@ const postDeleteConsume = async()=>{
 		eachMessage: async ({ message }) => {
             try {
                 const id = JSON.parse(message.value)
-                await Topic.deleteMany({postId: id});
+                const { postId } = id;
+                await Topic.deleteMany({postId: postId});
 
             } catch (error) {
                 console.log(error)
