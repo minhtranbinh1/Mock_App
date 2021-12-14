@@ -17,9 +17,9 @@ const { cmtCreatedProduce,
 
 // Create a new comment
 app.post('/api/comment',async (req, res) => {
-    const {user,topic,content} = req.body;
+    const {user,topic,content,postId} = req.body;
     try {
-        const newCmt = new Comment({user,topic,content});
+        const newCmt = new Comment({user,topic,content,postId});
         await newCmt.save();
         cmtCreatedProduce(newCmt)
         res.status(200).json({success: true,message:"create comment for topic success",comment:newCmt});
@@ -55,11 +55,22 @@ app.delete('/api/comment/:id',async(req,res) => {
         res.status(500).json({success: false,message: error})
     }
 })
-// delete by id topic
+// delete by id topic 
 app.delete('/api/comment/topic/:id',async(req,res) => {
     const id = req.params.id;
     try {
         await Comment.deleteMany({topic:id});
+        res.status(200).json({success: true,message:"delete success"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false,message: error})
+    }
+})
+// delete by id post
+app.delete('/api/comment/post/:id',async(req,res) => {
+    const id = req.params.id;
+    try {
+        await Comment.deleteMany({postId:id});
         res.status(200).json({success: true,message:"delete success"})
     } catch (error) {
         console.log(error);

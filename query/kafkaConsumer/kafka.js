@@ -96,8 +96,8 @@ const commentCreateConsume = async()=>{
 		eachMessage: async ({ message }) => {
             try {
                 const oneCmt = JSON.parse(message.value)
-                const { user,topic,_id,content,createdAt,updatedAt} = oneCmt;
-                const newCmt = new Comment({ topic,_id,content,createdAt,updatedAt,user})
+                const { user,topic,_id,content,postId,createdAt,updatedAt} = oneCmt;
+                const newCmt = new Comment({ topic,_id,content,createdAt,updatedAt,user,postId})
                 await newCmt.save();
                 const tp = await Topic.findOne({_id: topic});
                 let listComments = tp.listComments;
@@ -151,6 +151,28 @@ const topicUpdateConsume = async()=>{
                 const topicUpdate = JSON.parse(message.value)
                 const { _id,title,updatedAt} = topicUpdate;
                 await Topic.findByIdAndUpdate(_id,{title,updatedAt});
+            } catch (error) {
+                console.log(error)
+            }
+
+		},
+	})
+}
+const postUpdateConsume = async()=>{
+    const clientId = "postUpdate";
+    const kafka = new Kafka({ clientId, brokers })
+    const consumer = kafka.consumer({ groupId: clientId})
+    const topic = "update-post";
+    // Logic
+
+	await consumer.connect()
+	await consumer.subscribe({ topic })
+	await consumer.run({
+		eachMessage: async ({ message }) => {
+            try {
+                const postUpdate = JSON.parse(message.value)
+                const { _id,title,content,updatedAt} = postUpdate;
+                await Post.findByIdAndUpdate(_id,{title,content,updatedAt});
             } catch (error) {
                 console.log(error)
             }
@@ -215,6 +237,32 @@ const topicDeleteConsume = async()=>{
 		},
 	})
 }
+const postDeleteConsume = async()=>{
+    const clientId = "postRemove";
+    const kafka = new Kafka({ clientId, brokers })
+    const consumer = kafka.consumer({ groupId: clientId})
+    const topic = "remove-post";
+    // Logic
+
+	await consumer.connect()
+	await consumer.subscribe({ topic,fromBeginning: true })
+	await consumer.run({
+		eachMessage: async ({ message }) => {
+            try {
+                const id = JSON.parse(message.value)
+                const { postId } = id;
+                await Post.findByIdAndRemove(postId);
+                await Topic.deleteMany({postId: postId})
+                await Comment.deleteMany({postId:postId});
+
+            } catch (error) {
+                console.log(error)
+            }
+
+		},
+	})
+}
+
 
 
 module.exports = { 
@@ -225,5 +273,7 @@ module.exports = {
     commentUpdateConsume,
     commentDeleteConsume,
     topicUpdateConsume,
-    topicDeleteConsume
+    topicDeleteConsume,
+    postUpdateConsume,
+    postDeleteConsume
 }

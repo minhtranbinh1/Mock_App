@@ -15,7 +15,9 @@ const { userCreateConsume,
         commentUpdateConsume,
         commentDeleteConsume,
         topicUpdateConsume,
-        topicDeleteConsume
+        topicDeleteConsume,
+        postUpdateConsume,
+        postDeleteConsume
     } = require('./kafkaConsumer/kafka')
 const Post = require('./models/Post.Model')
 
@@ -65,4 +67,6 @@ app.listen(PORT, function(){
     commentDeleteConsume();
     topicUpdateConsume();
     topicDeleteConsume();
+    postUpdateConsume();
+    postDeleteConsume();
 });

@@ -14,7 +14,6 @@ const {
     topicCreatedProduce,
     topicUpdateProduce,
     topicRemoveProduce,
-    topicRemoveProduceToCmtService
  } = require('./kafkaProducer/index')
 const Topic = require('./models/Topic.Model')
 
@@ -68,6 +67,19 @@ app.delete('/api/topic/:id',async(req,res)=>{
     }
 })
 
+// delete topic by post id
+app.delete('/api/topic/post/:id',async(req,res)=>{
+    const postId = req.params.id;
+    try {
+        const deleteItems = await Topic.deleteMany({postId: postId});
+        if(!deleteItems) return res.status(400).json({success:false,message:"Delete topic failed"})
+        res.status(200).json({success:true,message:"Topic deleted successfully",deleteItems}) 
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false,message: error})
+    }
+})
 
 app.listen(PORT, function(){
     db.connect();
