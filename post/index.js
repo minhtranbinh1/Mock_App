@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
 
-
+const { listenFromCrawler } = require('./kafkaConsume/index')
 const { postCreatedProduce,
         postUpdateProduce,
         postRemoveProduce
@@ -33,19 +33,7 @@ app.post('/api/post',auth,authorization,async (req, res) => {
         res.status(500).json({error: error});
     }
 })
-/// add post by crawl
-app.post('/api/crawl/post',async (req, res) => {
-    const newPost = req.body
-    const { _id,title,content,user,createdAt,updatedAt } = newPost;
-    try {
-        postCreatedProduce(newPost);
-        const post = new Post({_id,title,content,user,createdAt,updatedAt})
-        await post.save();
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({error: error});
-    }
-})
+
 // update the post
 app.put('/api/post/:id',auth,authorization,async(req, res)=>{
     const postId = req.params.id;
@@ -80,5 +68,6 @@ app.delete('/api/post/:id',auth,authorization,async function(req, res){
 
 app.listen(PORT, function(){
     db.connect();
+    listenFromCrawler();
     console.log('service listening on port ' + PORT);
 });

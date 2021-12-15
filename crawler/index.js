@@ -11,6 +11,7 @@ app.use(cors());
 const axios = require('axios');
 const Post = require('./models/Post.Model');
 const { auth,authorization } = require('./middlewares/Auth')
+const { crawlData } = require('./kafka/Producer')
 
 app.get('/api/crawl',auth,authorization,async function(req, res){
     try {
@@ -22,8 +23,8 @@ app.get('/api/crawl',auth,authorization,async function(req, res){
                 content: post.content,
                 user: req.user._id,
             })
+            crawlData(newPost);
             await newPost.save();
-            await axios.post('http://localhost:3002/api/crawl/post',newPost)
             
         })
         res.status(200).json({success:true,message:"crawl data from API success"})
