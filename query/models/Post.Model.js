@@ -6,6 +6,7 @@ const PostSchema = new mongoose.Schema(
     content: {type: String, required: true},
     user: {type: Schema.Types.ObjectId, required: true,ref: 'users'},
     listTopic:[{type: Schema.Types.ObjectId , ref:'topics'}],
+    category:{type: String},
   },
   { timestamps: true}
 );

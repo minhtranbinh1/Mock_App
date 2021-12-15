@@ -17,8 +17,8 @@ const listenFromCrawler = async()=>{
 		eachMessage: async ({ message }) => {
             try {
                 const newPost = JSON.parse(message.value)
-                const { _id,title,content,user,createdAt,updatedAt } = newPost;
-                const post = new Post({_id,title,content,user,createdAt,updatedAt})
+                const { _id,title,content,user,createdAt,updatedAt,category } = newPost;
+                const post = new Post({_id,title,category,content,user,createdAt,updatedAt})
                 await post.save();
                 postCreatedProduce(newPost)
             } catch (error) {

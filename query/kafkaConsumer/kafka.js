@@ -45,8 +45,8 @@ const postCreateConsume = async () => {
 		eachMessage: async ({ message }) => {
             try {
                 const post = JSON.parse(message.value)
-                const { title,content,user,_id,createdAt,updatedAt } = post
-                const newPost = new Post({_id,title,content,user,createdAt,updatedAt});
+                const { title,content,user,_id,createdAt,updatedAt,category } = post
+                const newPost = new Post({_id,title,content,user,createdAt,updatedAt,category});
                 await newPost.save();
             } catch (error) {
                 console.log(error)

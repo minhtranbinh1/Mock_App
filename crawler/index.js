@@ -14,14 +14,16 @@ const { auth,authorization } = require('./middlewares/Auth')
 const { crawlData } = require('./kafka/Producer')
 
 app.get('/api/crawl',auth,authorization,async function(req, res){
+    const category = req.query.category
     try {
-        const response = await axios.get(process.env.LINK_API)
+        const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${process.env.API_KEY}`)
         const listPosts = response.data.articles
         listPosts.forEach(async (post)=> {
             let newPost = new Post({
                 title: post.title,
-                content: post.content,
+                content: post.content || "No Content",
                 user: req.user._id,
+                category: category
             })
             crawlData(newPost);
             await newPost.save();
