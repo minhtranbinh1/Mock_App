@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
-const axios = require('axios');
 const { auth,authorization } = require('./middlewares/Auth')
 const { postDeleteConsume } = require('./kafkaConsume/index')
 
@@ -37,7 +36,10 @@ app.post('/api/topics',auth,authorization,async function(req, res){
 app.put('/api/topic/:id',auth,authorization,async (req,res) => {
     const id = req.params.id;
     const { title } = req.body; 
+    const user = req.user
     try {
+        const owner =await Topic.findOne({_id:id,user:user._id})
+        if(!owner) return res.status(404).json({success: false,message:"cannot Update Topic of other user"})
         await Topic.findByIdAndUpdate(id,{title})
         const item = await Topic.findById(id)
         topicUpdateProduce(item)
@@ -52,7 +54,10 @@ app.put('/api/topic/:id',auth,authorization,async (req,res) => {
 // delete topic 
 app.delete('/api/topic/:id',auth,authorization,async(req,res)=>{
     const id = req.params.id;
+    const user = req.user
     try {
+            const owner =await Topic.findOne({_id:id,user:user._id})
+            if(!owner) return res.status(404).json({success: false,message:"cannot Delete Topic of other user"})
             const deleteItem = await Topic.findByIdAndDelete(id);
             if(!deleteItems) return res.status(404).json({success: false,message:"Delete failed"})
             topicRemoveProduce({_id:id});

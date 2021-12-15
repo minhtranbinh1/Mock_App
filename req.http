@@ -7,7 +7,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0M
 
 {
     "title":"Topic of post 1",
-    "postId": "61b8bce1ed3ea70ff0d39d2c",
+    "postId": "61b940d846df0dd2dae55f9a",
     "textHighlight":"post 1",
     "user": "61b41defd2dcd99d22f0b6cc"
 }
@@ -17,9 +17,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTczOTN9.T3rUhKX9pmybTpeqg1YynkkUhSZTES1G_48OXYKKycI
 
 {
-    "user":"61b41defd2dcd99d22f0b6cc",
-    "topic":"61b8d44c2f324eda72dec23c",
-    "postId":"61b8bce1ed3ea70ff0d39d2c",
+    "user":"61b5d1d590551dc386ea57ae",
+    "topic":"61b9462916cb842824489ece",
+    "postId":"61b940d846df0dd2dae55f9a",
     "content":"Hello topic 1"
 }
 ################################
@@ -30,7 +30,8 @@ Content-Type: application/json
     "content": "sorry, it's so very good"
 }
 ################################
-DELETE http://localhost:3005/api/comment/61b8bf8aad1f6ed43365d210
+DELETE http://localhost:3005/api/comment/61b94907fa01f78dd53fd708
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI1ZDFkNTkwNTUxZGMzODZlYTU3YWUiLCJpYXQiOjE2Mzk1MzI4ODN9.qf6Jm7DMe_4zIcSBJ40t3oKTYp4vrWz1VvCq3AVAkt4
 ########
 PUT http://localhost:3004/api/topic/61b49052257f3e202500c656
 Content-Type: application/json
@@ -66,7 +67,7 @@ Content-Type: application/json
 }
 ########
 DELETE http://localhost:3002/api/post/61b8bce1ed3ea70ff0d39d2c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk0OTc4ODd9.dVv-IWFwe62cDiUnGbcOEGBiAy_9L9YMtLI7ap1eEdA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI1ZDFkNTkwNTUxZGMzODZlYTU3YWUiLCJpYXQiOjE2Mzk1MzI4ODN9.qf6Jm7DMe_4zIcSBJ40t3oKTYp4vrWz1VvCq3AVAkt4
 ########
 POST http://localhost:3001/api/user
 Content-Type: application/json
@@ -84,7 +85,7 @@ POST http://localhost:3001/api/user/login
 Content-Type: application/json
 
 {
-    "email": "tbm1@gmail.com",
+    "email": "sanhtuan@gmail.com",
     "password": "1234"
 }
 ########

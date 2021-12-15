@@ -37,7 +37,10 @@ app.post('/api/comment',auth,authorization,async (req, res) => {
 app.put('/api/comment/:id',auth,authorization,async(req, res)=>{
     const id = req.params.id;
     const { content } = req.body;
+    const user = req.user
     try {
+        const owner =await Comment.findOne({_id:id,user:user._id})
+        if(!owner) return res.status(404).json({success: false,message:"cannot Update Comment of other user"})
         await Comment.findOneAndUpdate({_id:id},{content:content});
         const updatedAtComment = await Comment.findById({_id:id});
         cmtUpdateProduce(updatedAtComment);
@@ -46,34 +49,19 @@ app.put('/api/comment/:id',auth,authorization,async(req, res)=>{
         res.status(500).json({success: false,message: error})
     }
 })
-// Delete comment for topic
-app.delete('/api/comment/:id',async(req,res) => {
+
+// delete cmt by id cmt
+app.delete('/api/comment/:id',auth,authorization,async(req,res) => {
     const id = req.params.id;
+    const user = req.user
     try {
-        const deleteItem = await Comment.findByIdAndDelete(id);
-        cmtRemoveProduce({_id:id});
-        res.status(200).json({success: true,message:"delete success",deleteItem})
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({success: false,message: error})
-    }
-})
-// delete by id topic 
-app.delete('/api/comment/topic/:id',auth,authorization,async(req,res) => {
-    const id = req.params.id;
-    try {
-        await Comment.deleteMany({topic:id});
-        res.status(200).json({success: true,message:"delete success"})
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({success: false,message: error})
-    }
-})
-// delete by id post
-app.delete('/api/comment/post/:id',auth,authorization,async(req,res) => {
-    const id = req.params.id;
-    try {
-        await Comment.deleteMany({postId:id});
+        const owner =await Comment.findOne({_id:id,user:user._id})
+        console.log(user._id);
+        console.log(owner)
+        if(!owner) return res.status(404).json({success: false,message:"cannot Delete Comment of other user"})
+        
+        cmtRemoveProduce({_id:id})
+        await Comment.findByIdAndRemove(id);
         res.status(200).json({success: true,message:"delete success"})
     } catch (error) {
         console.log(error);
