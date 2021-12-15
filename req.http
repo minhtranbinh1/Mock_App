@@ -107,3 +107,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI1Z
 ########
 get http://localhost:3006/api/crawl?category=technology
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI0MWRlZmQyZGNkOTlkMjJmMGI2Y2MiLCJpYXQiOjE2Mzk1MzQ4OTV9.DpCDbxGRO6bDWili0XlgASRLr7aJTJ0FlxkPn2y2XHY
+
+################################
+GET http://localhost:3003/api/posts?category=business

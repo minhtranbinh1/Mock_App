@@ -23,8 +23,8 @@ const Post = require('./models/Post.Model')
 
 
 // routes
-app.get('/api/posts',async (req, res, next) => {
-    const postId = req.query.postId;
+app.get('/api/posts/:id',async (req, res, next) => {
+    const postId = req.params.id;
     try {
         const post = await Post.findOne({_id:postId}).populate([{
             path: 'user',
@@ -82,6 +82,41 @@ app.get('/api/getAllPosts',async function (req, res) {
         return res.status(200).json({success: true,message: 'Get ALL post successfully', post})
     } catch (error) {
         return res.status(500).json({error: error})
+    }
+})
+/// get post by category
+app.get('/api/posts',async function (req, res) {
+    const category = req.query.category
+    try {
+        if(!category) return res.status(400).json({success: true,message: 'Please enter category'})
+        const posts = await Post.find({ category: category}).populate([{
+            path: 'user',
+            select:
+                ['email', 'username','avatar','role']
+        },{
+            path: 'listTopic',
+            populate:[{
+                path: 'user',
+                select: 
+                    ['email', 'username','avatar','role']
+            },{
+                path: 'listComments',
+                populate:{
+                    path: 'user',
+                    select: 
+                    ['email', 'username','avatar','role']
+                },
+                select: 
+                    ['user', 'content']
+            }],
+            select:
+                ['title', 'postId','textHighlight','user']
+        }])
+
+        return res.status(200).json({success:true,message:"get post successfully",posts})
+        
+    } catch (error) {
+        res.status(500).json({error: error});
     }
 })
 
