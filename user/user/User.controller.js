@@ -8,8 +8,6 @@ const { transporter } = require('../mailService/index')
 const {  isExpiredOTP  } = require('../middlewares/timeOtpService/timeHandle')
 const { ValidatePassword } = require('../Validates/validates');
 const { mailIsAlready,createNewUser,validate,getInfoUser } = require('./User.service')
-const { userCreatedProduce,updateUserProduce } = require('../kafkaManage/index')
-
 
 class UserController{
     async createUser(req, res){

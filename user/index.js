@@ -28,5 +28,5 @@ app.post('/api/auth',UserController.auth)
 
 app.listen(PORT, ()=>{
     console.log('listening on port ' + PORT);
-    db.connect();
+    db.connect();   
 })

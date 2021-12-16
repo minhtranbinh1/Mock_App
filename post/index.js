@@ -5,7 +5,6 @@ env.config();
 const PORT = process.env.PORT || 3002;
 const db = require('./config/db/index')
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
@@ -22,7 +21,6 @@ const { auth,authorization } = require('./middlewares/Auth')
 // add post
 app.post('/api/post',auth,authorization,async (req, res) => {
     const { title,content,user } = req.body;
-    console.log(req.body)
     const newPost = new Post({title,content,user})
     try {
         postCreatedProduce(newPost);
